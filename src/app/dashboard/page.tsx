@@ -1,38 +1,28 @@
-'use client';
+'use client'
 
-import { useEffect, useState, useRouter } from 'next/navigation';
-import { supabase } from '../../../lib/supabaseClient';
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import { supabase } from '../../../lib/supabaseClient'
 
 function DashboardPage() {
-  const router = useRouter();
-  const [checking, setChecking] = useState(true);
-  const [error, setError] = useState('');
+  const router = useRouter()
+  const [checking, setChecking] = useState(true)
+  const [error, setError] = useState('')
 
   useEffect(() => {
-    const verifySession = async () => {
-      const { data, error } = await supabase.auth.getSession();
-      if (error) {
-        setError(error.message);
-      } else if (!data.session) {
-        router.push('/login');
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (!session) {
+        router.push('/login')
+      } else {
+        setChecking(false)
       }
-      setChecking(false);
-    };
+    }
+    checkUser()
+  }, [router])
 
-    verifySession();
-  }, [router]);
-
-  if (checking) {
-    return <main>Checking session...</main>;
-  }
-
-  if (error) {
-    return <main>❌ {error}</main>;
-  }
-
-  return (
-    <main>✅ You are logged in. Welcome to your dashboard.</main>
-  );
+  if (checking) return <p>Loading...</p>
+  return <p>✅ You are logged in. Welcome to your dashboard.</p>
 }
 
-export default DashboardPage;
+export default DashboardPage
