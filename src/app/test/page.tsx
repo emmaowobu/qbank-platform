@@ -1,16 +1,29 @@
-'use client';
+'use client'
 
-import { useEffect } from 'react';
-import { supabase } from '../../../lib/supabaseClient';
+import { useEffect } from 'react'
+import { supabase } from '../../../lib/supabaseClient'
 
 export default function TestPage() {
   useEffect(() => {
-    supabase
-      .from('nonexistent_table')
-      .select('*')
-      .then(console.log)
-      .then(undefined, console.error);
-  }, []);
+    async function fetchTest() {
+      try {
+        const { data, error } = await supabase
+          .from('nonexistent_table')
+          .select('*')
 
-  return <div>✅ Supabase connection test page</div>;
+        if (error) {
+          console.error(error)
+        } else {
+          console.log(data)
+        }
+      } catch (err) {
+        console.error(err)
+      }
+    }
+
+    fetchTest()
+  }, [])
+
+  return <div>✅ Supabase connection test page</div>
 }
+
