@@ -7,6 +7,7 @@ import { supabase } from '../../../lib/supabaseClient'
 function DashboardPage() {
   const router = useRouter()
   const [checking, setChecking] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const checkUser = async () => {
