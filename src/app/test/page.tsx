@@ -9,21 +9,20 @@ export default function TestPage() {
       try {
         const { data, error } = await supabase
           .from('nonexistent_table')
-          .select('*')
+          .select('*');
 
         if (error) {
-          console.error(error)
+          console.error(error);
         } else {
-          console.log(data)
+          console.log(data);
         }
       } catch (err) {
-        console.error(err)
+        console.error(err);
       }
     }
 
-    fetchTest()
-  }, [])
+    fetchTest();
+  }, []);
 
-  return <div>✅ Supabase connection test page</div>
+  return <div>✅ Supabase connection test page</div>;
 }
-
