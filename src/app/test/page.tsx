@@ -9,7 +9,7 @@ export default function TestPage() {
       .from('nonexistent_table')
       .select('*')
       .then(console.log)
-      .catch(console.error);
+      .then(undefined, console.error);
   }, []);
 
   return <div>✅ Supabase connection test page</div>;

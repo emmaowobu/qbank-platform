@@ -1,13 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '../../../lib/supabaseClient'
 
 function DashboardPage() {
   const router = useRouter()
   const [checking, setChecking] = useState(true)
-  const [error, setError] = useState('')
 
   useEffect(() => {
     const checkUser = async () => {
