@@ -5,11 +5,23 @@ import { supabase } from '../../../lib/supabaseClient';
 
 export default function TestPage() {
   useEffect(() => {
-    supabase
-      .from('nonexistent_table')
-      .select('*')
-      .then(console.log)
-      .catch(console.error);
+    async function fetchTest() {
+      try {
+        const { data, error } = await supabase
+          .from('nonexistent_table')
+          .select('*');
+
+        if (error) {
+          console.error(error);
+        } else {
+          console.log(data);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchTest();
   }, []);
 
   return <div>✅ Supabase connection test page</div>;
