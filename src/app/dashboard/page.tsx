@@ -11,7 +11,17 @@ function DashboardPage() {
 
   useEffect(() => {
     const checkUser = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabase.auth.getSession()
+
+      if (sessionError) {
+        setError(sessionError.message)
+        setChecking(false)
+        return
+      }
+
       if (!session) {
         router.push('/login')
       } else {
@@ -22,6 +32,7 @@ function DashboardPage() {
   }, [router])
 
   if (checking) return <p>Loading...</p>
+  if (error) return <p style={{ color: 'red' }}>❌ {error}</p>
   return <p>✅ You are logged in. Welcome to your dashboard.</p>
 }
 
