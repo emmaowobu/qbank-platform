@@ -1,14 +1,16 @@
 'use client'
 
+import Link from 'next/link'
+
 export default function Sidebar() {
   return (
     <aside className="bg-gray-100 w-full sm:w-64 p-4 space-y-2">
       <nav>
         <ul className="space-y-2">
           <li>
-            <a href="#" className="block px-2 py-1 rounded hover:bg-gray-200">
+            <Link href="/dashboard" className="block px-2 py-1 rounded hover:bg-gray-200">
               Home
-            </a>
+            </Link>
           </li>
           <li>
             <a href="#" className="block px-2 py-1 rounded hover:bg-gray-200">
@@ -16,9 +18,9 @@ export default function Sidebar() {
             </a>
           </li>
           <li>
-            <a href="#" className="block px-2 py-1 rounded hover:bg-gray-200">
+            <Link href="/profile" className="block px-2 py-1 rounded hover:bg-gray-200">
               Profile
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>
