@@ -24,7 +24,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (session === undefined) return
-    const protectedRoutes = ['/dashboard']
+    const protectedRoutes = ['/dashboard', '/profile']
     if (!session && protectedRoutes.includes(pathname)) {
       router.push('/login')
     }
