@@ -72,11 +72,19 @@ export default function QuizPage() {
 
   const handleSubmit = () => {
     const correct = questions.reduce((acc, q) => {
-      return answers[q.id] === q.correct_option ? acc + 1 : acc
+      const selectedAnswer = answers[q.id]
+      return selectedAnswer?.toUpperCase() === q.correct_option?.toUpperCase()
+        ? acc + 1
+        : acc
     }, 0)
     setScore(correct)
     setIsSubmitted(true)
   }
+
+  const totalQuestions = questions.length
+  const scorePercent = totalQuestions
+    ? Math.round((score / totalQuestions) * 100)
+    : 0
 
   return (
     !session ? (
@@ -111,16 +119,16 @@ export default function QuizPage() {
         {isSubmitted && (
           <div className="p-4 border rounded mt-6 space-y-2">
             <p>
-              {score / questions.length >= 0.8 ? 'Great job!' : 'Keep practicing!'}
+              {scorePercent >= 80 ? 'Great job!' : 'Keep practicing!'}
             </p>
             <div className="w-full bg-gray-300 h-4 rounded">
               <div
-                className={`h-4 rounded transition-all ${score / questions.length >= 0.8 ? 'bg-green-500' : 'bg-red-500'}`}
-                style={{ width: `${(score / questions.length) * 100}%` }}
+                className={`h-4 rounded transition-all ${scorePercent >= 80 ? 'bg-green-500' : 'bg-red-500'}`}
+                style={{ width: `${scorePercent}%` }}
               ></div>
             </div>
             <p className="text-sm mt-2">
-              Score: {score}/{questions.length} ({Math.round((score / questions.length) * 100)}%)
+              Score: {score}/{questions.length} ({scorePercent}%)
             </p>
           </div>
         )}
