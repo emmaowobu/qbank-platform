@@ -30,10 +30,10 @@ export default function QuestionCard({
   isSubmitted,
 }: Props) {
   const options = [
-    { key: 'option_a', label: question.option_a },
-    { key: 'option_b', label: question.option_b },
-    { key: 'option_c', label: question.option_c },
-    { key: 'option_d', label: question.option_d },
+    { key: 'A', label: question.option_a },
+    { key: 'B', label: question.option_b },
+    { key: 'C', label: question.option_c },
+    { key: 'D', label: question.option_d },
   ]
 
   const handleChange = (key: string) => {
