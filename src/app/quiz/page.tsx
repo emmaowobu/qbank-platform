@@ -121,11 +121,11 @@ export default function QuizPage() {
             <p className="text-sm mt-2">
               Score: {score}/{questions.length} ({scorePercent}%)
             </p>
-            <div className="w-full bg-gray-200 h-4 rounded mt-2">
+            <div className="w-full bg-gray-200 h-4 rounded mt-4">
               <div
                 className={`${
                   scorePercent >= 80 ? 'bg-green-500' : 'bg-red-500'
-                } h-4 rounded`}
+                } h-4 rounded transition-all duration-500`}
                 style={{ width: `${scorePercent}%` }}
               />
             </div>
