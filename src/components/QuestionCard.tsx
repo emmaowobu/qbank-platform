@@ -47,18 +47,30 @@ export default function QuestionCard({
       <p className="font-medium">{question.question_text}</p>
       {options.map(({ key, label }) => {
         const isChecked = selected === key
+        const isCorrect = key === question.correct_option
         let optionStyle = ''
         if (isSubmitted) {
-          if (key === question.correct_option) {
+          if (isCorrect) {
             optionStyle = 'text-green-600'
           } else if (isChecked) {
             optionStyle = 'text-red-600'
+          } else {
+            optionStyle = 'text-gray-400'
           }
         } else if (showFeedback && isChecked) {
-          optionStyle = key === question.correct_option ? 'text-green-600' : 'text-red-600'
+          optionStyle = isCorrect ? 'text-green-600' : 'text-red-600'
         }
+
+        const icon = isSubmitted
+          ? isCorrect
+            ? ' ✅'
+            : isChecked
+              ? ' ❌'
+              : ''
+          : ''
+
         return (
-          <label key={key} className={`block ${optionStyle}`}>
+          <label key={key} className={`block ${optionStyle}`.trim()}>
             <input
               type="radio"
               name={question.id}
@@ -68,6 +80,7 @@ export default function QuestionCard({
               className="mr-2"
             />
             {label}
+            {icon}
           </label>
         )
       })}
