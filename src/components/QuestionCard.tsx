@@ -46,8 +46,8 @@ export default function QuestionCard({
     <div className="mb-6 p-4 border rounded space-y-2">
       <p className="text-lg font-semibold mb-2">{question.question_text}</p>
       {options.map(({ key, label }) => {
-        const isChecked = selected === key
-        const isCorrect = key === question.correct_option
+        const isChecked = selected?.toUpperCase() === key?.toUpperCase()
+        const isCorrect = key?.toUpperCase() === question.correct_option?.toUpperCase()
         let optionStyle = ''
         if (isSubmitted) {
           if (isCorrect) {
