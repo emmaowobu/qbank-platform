@@ -109,18 +109,19 @@ export default function QuizPage() {
           </button>
         )}
         {isSubmitted && (
-          <div className="space-y-2">
+          <div className="p-4 border rounded mt-6 space-y-2">
             <p>
               {score / questions.length >= 0.8 ? 'Great job!' : 'Keep practicing!'}
             </p>
-            <div className="w-full bg-gray-200 rounded h-6">
+            <div className="w-full bg-gray-300 h-4 rounded">
               <div
-                className={`h-6 rounded flex items-center justify-center text-white text-sm ${score / questions.length >= 0.8 ? 'bg-green-500' : 'bg-red-500'}`}
+                className={`h-4 rounded transition-all ${score / questions.length >= 0.8 ? 'bg-green-500' : 'bg-red-500'}`}
                 style={{ width: `${(score / questions.length) * 100}%` }}
-              >
-                {`Score: ${Math.round((score / questions.length) * 100)}% (${score}/${questions.length} correct)`}
-              </div>
+              ></div>
             </div>
+            <p className="text-sm mt-2">
+              Score: {score}/{questions.length} ({Math.round((score / questions.length) * 100)}%)
+            </p>
           </div>
         )}
       </main>
