@@ -7,14 +7,12 @@ export default function TestPage() {
   useEffect(() => {
     async function fetchTest() {
       try {
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from('nonexistent_table')
           .select('*');
 
         if (error) {
           console.error(error);
-        } else {
-          console.log(data);
         }
       } catch (err) {
         console.error(err);

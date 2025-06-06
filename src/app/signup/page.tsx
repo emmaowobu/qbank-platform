@@ -14,7 +14,7 @@ export default function SignupPage() {
     setLoading(true);
     setMessage('Creating account...');
 
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -23,7 +23,6 @@ export default function SignupPage() {
       console.error('Signup error:', error.message);
       setMessage(`❌ ${error.message}`);
     } else {
-      console.log('Signup success:', data);
       setMessage('✅ Check your email to confirm your account.');
       setEmail('');
       setPassword('');

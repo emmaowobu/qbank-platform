@@ -42,7 +42,6 @@ export default function QuizPage() {
       return
     }
 
-    console.log('Session:', session)
 
     async function loadQuestions() {
       setLoading(true)
