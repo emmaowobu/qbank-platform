@@ -47,3 +47,4 @@ lib/
 - Handle errors clearly via UI (e.g., `setError(msg)`)
 - Keep UI minimal for MVP; use Tailwind (if included later)
 - Prefer clean, reusable components
+End of guidelines.
