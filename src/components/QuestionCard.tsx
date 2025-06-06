@@ -43,8 +43,8 @@ export default function QuestionCard({
   }
 
   return (
-    <div className="border rounded p-4 space-y-2">
-      <p className="font-medium">{question.question_text}</p>
+    <div className="mb-6 p-4 border rounded space-y-2">
+      <p className="text-lg font-semibold mb-2">{question.question_text}</p>
       {options.map(({ key, label }) => {
         const isChecked = selected === key
         const isCorrect = key === question.correct_option
@@ -63,11 +63,11 @@ export default function QuestionCard({
 
         const icon = isSubmitted
           ? isCorrect
-            ? ' ✅'
+            ? <span className="ml-1 text-green-600">✅</span>
             : isChecked
-              ? ' ❌'
-              : ''
-          : ''
+              ? <span className="ml-1 text-red-600">❌</span>
+              : null
+          : null
 
         return (
           <label key={key} className={`block ${optionStyle}`.trim()}>
@@ -77,7 +77,7 @@ export default function QuestionCard({
               checked={isChecked}
               onChange={() => handleChange(key)}
               disabled={disabled}
-              className="mr-2"
+              className={`mr-2 ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
             />
             {label}
             {icon}
@@ -85,7 +85,7 @@ export default function QuestionCard({
         )
       })}
       {(showFeedback || isSubmitted) && selected && question.explanation && (
-        <p className="mt-2 text-sm text-gray-600">{question.explanation}</p>
+        <p className="mt-4 text-sm text-gray-600">{question.explanation}</p>
       )}
     </div>
   )
