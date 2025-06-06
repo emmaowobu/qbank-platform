@@ -31,47 +31,43 @@ function LoginPage() {
   };
 
   return (
-    <main style={{ padding: '2rem', maxWidth: '400px', margin: 'auto' }}>
+    <main className="p-8 max-w-md mx-auto">
       <h1>🔐 Login</h1>
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>Email:</label><br />
+        <div className="mb-4">
+          <label>Email:</label>
+          <br />
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
-            style={{ width: '100%', padding: '0.5rem' }}
+            className="w-full p-2"
             disabled={loading}
           />
         </div>
-        <div style={{ marginBottom: '1rem' }}>
-          <label>Password:</label><br />
+        <div className="mb-4">
+          <label>Password:</label>
+          <br />
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="••••••••"
-            style={{ width: '100%', padding: '0.5rem' }}
+            className="w-full p-2"
             disabled={loading}
           />
         </div>
         <button
           type="submit"
           disabled={loading}
-          style={{
-            padding: '0.5rem 1rem',
-            backgroundColor: loading ? '#ccc' : '#0070f3',
-            color: '#fff',
-            border: 'none',
-            cursor: loading ? 'not-allowed' : 'pointer',
-          }}
+          className="px-4 py-2 text-white bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
       {error && (
-        <p style={{ marginTop: '1rem', color: 'red' }}>{error}</p>
+        <p className="mt-4 text-red-600">{error}</p>
       )}
     </main>
   );
