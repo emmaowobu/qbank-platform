@@ -81,9 +81,8 @@ export default function QuizPage() {
   }
 
   const totalQuestions = questions.length
-  const scorePercent = totalQuestions
-    ? Math.round((score / totalQuestions) * 100)
-    : 0
+  const correctAnswers = score
+  const scorePercent = Math.round((correctAnswers / totalQuestions) * 100)
 
   return (
     !session ? (
@@ -119,9 +118,9 @@ export default function QuizPage() {
           <div className="p-4 border rounded mt-6 space-y-2">
             <p>{scorePercent >= 80 ? 'Great job!' : 'Keep practicing!'}</p>
             <p className="text-sm mt-2">
-              Score: {score}/{questions.length} ({scorePercent}%)
+              Score: {correctAnswers}/{totalQuestions} correct
             </p>
-            <div className="w-full bg-gray-200 h-4 rounded mt-4">
+            <div className="w-full bg-gray-300 h-4 rounded mt-4">
               <div
                 className={`${
                   scorePercent >= 80 ? 'bg-green-500' : 'bg-red-500'
@@ -129,6 +128,9 @@ export default function QuizPage() {
                 style={{ width: `${scorePercent}%` }}
               />
             </div>
+            <p className="text-sm mt-2">
+              Score: {scorePercent}% ({correctAnswers}/{totalQuestions} correct)
+            </p>
           </div>
         )}
       </main>
