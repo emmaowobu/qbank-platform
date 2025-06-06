@@ -7,6 +7,10 @@ import Sidebar from '../../components/Sidebar'
 import TopNav from '../../components/TopNav'
 import Card from '../../components/Card'
 
+interface UserMetadata {
+  full_name?: string
+}
+
 export default function ProfilePage() {
   const session = useSession()
   const [name, setName] = useState('')
@@ -15,7 +19,8 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (session) {
-      setName((session.user.user_metadata as any)?.full_name || '')
+      const meta = session.user.user_metadata as UserMetadata
+      setName(meta?.full_name || '')
     }
   }, [session])
 
