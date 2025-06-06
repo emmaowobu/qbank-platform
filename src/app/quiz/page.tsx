@@ -121,14 +121,16 @@ export default function QuizPage() {
             <p>
               {scorePercent >= 80 ? 'Great job!' : 'Keep practicing!'}
             </p>
-            <div className="w-full bg-gray-300 h-4 rounded">
+            <div className="w-full bg-gray-200 rounded h-4 mt-4">
               <div
-                className={`h-4 rounded transition-all ${scorePercent >= 80 ? 'bg-green-500' : 'bg-red-500'}`}
+                className={`${
+                  scorePercent >= 80 ? 'bg-green-500' : 'bg-red-500'
+                } h-4 rounded transition-all duration-500`}
                 style={{ width: `${scorePercent}%` }}
-              ></div>
+              />
             </div>
             <p className="text-sm mt-2">
-              Score: {score}/{questions.length} ({scorePercent}%)
+              Score: {scorePercent}% ({score}/{questions.length})
             </p>
           </div>
         )}
