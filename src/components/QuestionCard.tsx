@@ -17,9 +17,18 @@ interface Props {
   selected?: string
   onSelect: (option: string) => void
   showFeedback?: boolean
+  disabled?: boolean
+  isSubmitted?: boolean
 }
 
-export default function QuestionCard({ question, selected, onSelect, showFeedback }: Props) {
+export default function QuestionCard({
+  question,
+  selected,
+  onSelect,
+  showFeedback,
+  disabled,
+  isSubmitted,
+}: Props) {
   const options = [
     { key: 'option_a', label: question.option_a },
     { key: 'option_b', label: question.option_b },
@@ -28,7 +37,9 @@ export default function QuestionCard({ question, selected, onSelect, showFeedbac
   ]
 
   const handleChange = (key: string) => {
-    onSelect(key)
+    if (!disabled) {
+      onSelect(key)
+    }
   }
 
   return (
@@ -37,7 +48,13 @@ export default function QuestionCard({ question, selected, onSelect, showFeedbac
       {options.map(({ key, label }) => {
         const isChecked = selected === key
         let optionStyle = ''
-        if (showFeedback && isChecked) {
+        if (isSubmitted) {
+          if (key === question.correct_option) {
+            optionStyle = 'text-green-600'
+          } else if (isChecked) {
+            optionStyle = 'text-red-600'
+          }
+        } else if (showFeedback && isChecked) {
           optionStyle = key === question.correct_option ? 'text-green-600' : 'text-red-600'
         }
         return (
@@ -47,13 +64,14 @@ export default function QuestionCard({ question, selected, onSelect, showFeedbac
               name={question.id}
               checked={isChecked}
               onChange={() => handleChange(key)}
+              disabled={disabled}
               className="mr-2"
             />
             {label}
           </label>
         )
       })}
-      {showFeedback && selected && question.explanation && (
+      {(showFeedback || isSubmitted) && selected && question.explanation && (
         <p className="mt-2 text-sm text-gray-600">{question.explanation}</p>
       )}
     </div>
