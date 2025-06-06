@@ -20,6 +20,8 @@ export default function QuizPage() {
   const [questions, setQuestions] = useState<Question[]>([])
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(true)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [score, setScore] = useState(0)
   const session = useSession()
 
   // load saved answers from localStorage
@@ -60,7 +62,17 @@ export default function QuizPage() {
   }, [session])
 
   const handleSelect = (id: string, option: string) => {
-    setAnswers(prev => ({ ...prev, [id]: option }))
+    if (!isSubmitted) {
+      setAnswers(prev => ({ ...prev, [id]: option }))
+    }
+  }
+
+  const handleSubmit = () => {
+    const correct = questions.reduce((acc, q) => {
+      return answers[q.id] === q.correct_option ? acc + 1 : acc
+    }, 0)
+    setScore(correct)
+    setIsSubmitted(true)
   }
 
   return (
@@ -79,9 +91,35 @@ export default function QuizPage() {
             question={q}
             selected={answers[q.id]}
             onSelect={(opt) => handleSelect(q.id, opt)}
-            showFeedback={!!answers[q.id]}
+            showFeedback={isSubmitted}
+            disabled={isSubmitted}
+            isSubmitted={isSubmitted}
           />
         ))}
+        {questions.length > 0 && !isSubmitted && (
+          <button
+            onClick={handleSubmit}
+            className="px-4 py-2 bg-blue-600 text-white rounded"
+          >
+            Submit Quiz
+          </button>
+        )}
+        {isSubmitted && (
+          <div className="space-y-2">
+            <p>
+              You scored {score} out of {questions.length}
+            </p>
+            <p>
+              {score / questions.length >= 0.8 ? 'Great job!' : 'Keep practicing!'}
+            </p>
+            <div className="w-full bg-gray-200 rounded h-4">
+              <div
+                className={`h-4 rounded ${score / questions.length >= 0.8 ? 'bg-green-500' : 'bg-red-500'}`}
+                style={{ width: `${(score / questions.length) * 100}%` }}
+              />
+            </div>
+          </div>
+        )}
       </main>
     )
   )
