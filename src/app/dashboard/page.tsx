@@ -31,6 +31,10 @@ export default function DashboardPage() {
     router.push('/quiz')
   }
 
+  const startWeakQuiz = () => {
+    router.push('/quiz?personalized=true')
+  }
+
   return (
     <div className="flex flex-col sm:flex-row min-h-screen">
       <Sidebar />
@@ -49,6 +53,12 @@ export default function DashboardPage() {
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
             Start New Quiz
+          </button>
+          <button
+            onClick={startWeakQuiz}
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+          >
+            Practice Weak Areas
           </button>
         </main>
       </div>
