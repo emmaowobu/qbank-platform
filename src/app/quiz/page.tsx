@@ -22,6 +22,7 @@ export default function QuizPage() {
   const [loading, setLoading] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [score, setScore] = useState(0)
+  const [error, setError] = useState('')
   const session = useSession()
 
   // load saved answers from localStorage
@@ -45,15 +46,17 @@ export default function QuizPage() {
 
     async function loadQuestions() {
       setLoading(true)
-      const { data, error } = await supabase
+      const { data, error: fetchError } = await supabase
         .from('questions')
         .select('*')
         .limit(5)
 
-      if (error) {
-        console.error('Error fetching questions', error.message)
+      if (fetchError) {
+        console.error('Error fetching questions', fetchError.message)
+        setError(fetchError.message)
       } else if (data) {
         setQuestions(data as Question[])
+        setError('')
       }
       setLoading(false)
     }
@@ -81,6 +84,7 @@ export default function QuizPage() {
     ) : (
       <main className="p-4 space-y-4">
         <h1 className="text-lg font-semibold">Quiz</h1>
+        {error && <p className="text-red-600">{error}</p>}
         {loading && <p>Loading questions...</p>}
         {!loading && questions.length === 0 && (
           <p>No questions available.</p>
