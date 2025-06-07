@@ -27,6 +27,7 @@ export default function QuizPage() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [score, setScore] = useState(0)
   const [error, setError] = useState('')
+  const [notice, setNotice] = useState('')
   const [difficultyFilter, setDifficultyFilter] = useState<'All' | Difficulty>('All')
   const session = useSession()
   const searchParams = useSearchParams()
@@ -74,12 +75,18 @@ export default function QuizPage() {
         if (weakTopics && weakTopics.length > 0) {
           const topics = weakTopics.map((w) => w.topic)
           questionQuery = questionQuery.in('topic', topics)
+          setNotice('')
+        } else {
+          setNotice("You don't have any weak topics yet — keep practicing!")
+          setQuestions([])
+          setLoading(false)
+          return
         }
       }
 
       const { data, error: fetchError } = await questionQuery
         .order('created_at', { ascending: false })
-        .limit(20)
+        .limit(10)
 
       if (fetchError) {
         console.error('Error fetching questions', fetchError.message)
@@ -176,8 +183,9 @@ export default function QuizPage() {
           </select>
         </div>
         {error && <p className="text-red-600">{error}</p>}
+        {notice && <p className="text-gray-700">{notice}</p>}
         {loading && <p>Loading questions...</p>}
-        {!loading && questions.length === 0 && (
+        {!loading && questions.length === 0 && !notice && (
           <p>No questions available.</p>
         )}
         {questions.map(q => (
