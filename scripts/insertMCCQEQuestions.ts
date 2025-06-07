@@ -1,6 +1,6 @@
 // Insert MCCQE-style questions into Supabase
 
-import { supabase } from '../lib/supabaseClient'
+import { supabase } from '../utils/supabaseClient';
 
 const questions = [
   {
