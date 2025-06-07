@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Create Supabase client using environment variables
+// Create Supabase client using your env variables
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
@@ -9,10 +9,9 @@ const supabase = createClient(
 
 export async function POST() {
   try {
-    // TEMP: Use a real user_id from your database for testing
+    // TEMP: Replace this with a real user_id from your DB
     const user_id = 'test-user-id-123';
 
-    // Step 1: Fetch user's performance by tag
     const { data: performanceData, error: perfErr } = await supabase
       .from('user_performance')
       .select('tag, accuracy')
@@ -22,13 +21,11 @@ export async function POST() {
       return NextResponse.json({ error: 'No performance data' }, { status: 404 });
     }
 
-    // Step 2: Get 2 weakest tags
     const weakTags = performanceData
       .sort((a, b) => a.accuracy - b.accuracy)
       .slice(0, 2)
       .map((entry) => entry.tag);
 
-    // Step 3: Fetch questions from weak tags
     const { data: questions, error: questionErr } = await supabase
       .from('questions')
       .select('*')

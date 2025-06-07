@@ -12,7 +12,7 @@ export default function WeakTopicQuizTestPage() {
     setError('')
     setData(null)
     try {
-      const res = await fetch('/api/quiz/weak-topics', { method: 'POST' })
+      const res = await fetch('/api/test-weakquiz', { method: 'POST' })
       const json = await res.json()
       if (!res.ok) {
         setError(json.error || 'Error generating quiz')
