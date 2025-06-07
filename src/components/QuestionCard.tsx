@@ -8,6 +8,7 @@ type Question = {
   option_b: string
   option_c: string
   option_d: string
+  option_e?: string | null
   correct_option: string
   explanation?: string | null
 }
@@ -34,7 +35,8 @@ export default function QuestionCard({
     { key: 'B', label: question.option_b },
     { key: 'C', label: question.option_c },
     { key: 'D', label: question.option_d },
-  ]
+    { key: 'E', label: question.option_e },
+  ].filter(opt => opt.label !== null && opt.label !== undefined && opt.label !== '')
 
   const handleChange = (key: string) => {
     if (!disabled) {

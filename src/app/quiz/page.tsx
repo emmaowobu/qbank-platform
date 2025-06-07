@@ -14,6 +14,7 @@ interface Question {
   option_b: string
   option_c: string
   option_d: string
+  option_e?: string | null
   correct_option: string
   topic: string
   difficulty: Difficulty
